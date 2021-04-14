@@ -24,7 +24,6 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="470" id="cPO-GO-c36"/>
                                 </constraints>
@@ -37,6 +36,9 @@
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Kn2-5c-tBc">
                                 <rect key="frame" x="106" y="605" width="282" height="31"/>
+                                <connections>
+                                    <action selector="intensityChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="3kw-3R-kaV"/>
+                                </connections>
                             </slider>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i5S-ar-mkB">
                                 <rect key="frame" x="285" y="673" width="84" height="45"/>
@@ -45,6 +47,9 @@
                                     <constraint firstAttribute="height" constant="45" id="v9L-tc-O0t"/>
                                 </constraints>
                                 <state key="normal" title="Save"/>
+                                <connections>
+                                    <action selector="save:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NsN-2G-1kY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ODB-FN-BBb">
                                 <rect key="frame" x="51" y="673" width="84" height="45"/>
@@ -54,6 +59,9 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <state key="normal" title="Change Filter"/>
+                                <connections>
+                                    <action selector="changeFilter:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xGZ-9K-Iti"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -75,6 +83,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JGF-zn-3HX"/>
+                    <connections>
+                        <outlet property="imageView" destination="PEb-xj-mPc" id="ZMD-Af-UWf"/>
+                        <outlet property="intensity" destination="Kn2-5c-tBc" id="AsS-8N-Xid"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
