@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreImage
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -15,12 +16,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     var currentImage: UIImage!
     
+    var context: CIContext!
+    var currentFilter: CIFilter!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "CoreImage"
+        title = "CoreImageApp"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(importImage))
+        
+        context = CIContext()
+        currentFilter = CIFilter(name: "CISepiaTone")
         
     }
     
@@ -38,7 +45,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         currentImage = image
         
+        let beginImage = CIImage(image: currentImage)
+        currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         
+        applyProcessing()
+        
+    }
+    
+    func applyProcessing(){
         
     }
     
