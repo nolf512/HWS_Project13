@@ -55,6 +55,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func applyProcessing(){
         
         guard let image = currentFilter.outputImage else { return }
+        
+        //フィルター（kCIInputIntensityKey）の値（強度）をセット
         currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
         
         if let cgimg = context.createCGImage(image, from: image.extent) {
@@ -66,6 +68,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     @IBAction func changeFilter(_ sender: Any) {
+        
+        let ac = UIAlertController(title: "Choose filter", message: nil, preferredStyle: .actionSheet)
+        
+        ac.addAction(UIAlertAction(title: "CIBumpDistortion", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CIGaussianBlur", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CIPixellate", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CISepiaTone", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CITwirlDistortion", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CIUnsharpMask", style: .default, handler: setFilter))
+        ac.addAction(UIAlertAction(title: "CIVignette", style: .default, handler: setFilter))
+
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        
+        present(ac, animated: true, completion: nil)
     }
     
     
@@ -77,6 +94,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBAction func intensityChange(_ sender: Any) {
     }
     
+    
+    func setFilter(action: UIAlertAction){
+        print("setFilter")
+    }
     
     
 }
