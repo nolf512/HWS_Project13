@@ -54,6 +54,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func applyProcessing(){
         
+        guard let image = currentFilter.outputImage else { return }
+        currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
+        
+        if let cgimg = context.createCGImage(image, from: image.extent) {
+            let processedImage = UIImage(cgImage: cgimg)
+            imageView.image = processedImage
+        }
+        
     }
     
     
