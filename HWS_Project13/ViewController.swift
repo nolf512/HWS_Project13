@@ -52,20 +52,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
     
-    func applyProcessing(){
-        
-        guard let image = currentFilter.outputImage else { return }
-        
-        //フィルター（kCIInputIntensityKey）の値（強度）をセット
-        currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)
-        
-        if let cgimg = context.createCGImage(image, from: image.extent) {
-            let processedImage = UIImage(cgImage: cgimg)
-            imageView.image = processedImage
-        }
-        
-    }
-    
+   
     
     @IBAction func changeFilter(_ sender: Any) {
         
@@ -86,13 +73,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     
-    @IBAction func save(_ sender: Any) {
-    }
+
     
     
-    
-    @IBAction func intensityChange(_ sender: Any) {
-    }
+   
     
     
     func setFilter(action: UIAlertAction){
@@ -108,9 +92,45 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         applyProcessing()
         
+    }
+    
+    
+    @IBAction func save(_ sender: Any) {
+        
+        UIImageWriteToSavedPhotosAlbum(imageView.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        
+    }
+    
+    @IBAction func intensityChange(_ sender: Any) {
+    }
+    
+    func applyProcessing(){
+        
+        let inputKeys = currentFilter.inputKeys
+        
+        if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(intensity.value, forKey: kCIInputIntensityKey)}
+        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(intensity.value * 200, forKey: kCIInputRadiusKey)}
+        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(intensity.value * 10, forKey: kCIInputIntensityKey)}
+        if inputKeys.contains(kCIInputCenterKey) { currentFilter.setValue(CIVector(x: currentImage.size.width / 2, y: currentImage.size.height), forKey: kCIInputCenterKey)}
         
         
-
+        if let cgimg = context.createCGImage(currentFilter.outputImage!, from: currentFilter.outputImage!.extent) {
+            let processedImage = UIImage(cgImage: cgimg)
+            self.imageView.image = processedImage
+        }
+ 
+    }
+    
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer){
+        if let error = error {
+            let ac = UIAlertController(title: "Save Error", message: error.localizedDescription, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        } else {
+            let ac = UIAlertController(title: "Saved", message: "Saved to your Photoliblary", preferredStyle: .alert)
+            ac.addAction((UIAlertAction(title: "OK", style: .default, handler: nil)))
+            ac.present(ac, animated: true, completion: nil)
+        }
     }
     
     
